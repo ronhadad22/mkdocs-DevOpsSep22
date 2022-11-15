@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Linux ex-2 - DevOps Course January 22</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Linux ex-2";
+        var mkdocs_page_input_path = "linux_ex2.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DevOps Course January 22
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linux_ex1/">Linux Ex1</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DevOps Course January 22</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Linux ex-2</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="linux-ex-2">Linux ex-2</h1>
+<p>Due date: 31/03/2022 23:59</p>
+<p>Max possible points: 135 points</p>
+<h2 id="preliminaries">Preliminaries</h2>
+<ol>
+<li>Open <a href="https://github.com/alonitac/DevOpsJan22">our shared git repo</a> in PyCharm and pull the repository in branch <strong>main</strong> to get an up-to-date version</li>
+<li>Create your own git branch for this exercise according to  <code>linux_ex2/&lt; alias &gt;</code> (e.g. linux_ex2/alonit).</li>
+</ol>
+<h2 id="questions">Questions</h2>
+<h3 id="tls-communication">TLS communication</h3>
+<p><strong>90 points</strong></p>
+<p><img alt="Alice-Bob-Eve" src="/mkdocs-DevOpsSep22/img/alice-bob-eve.png" /></p>
+<p>As you know, the communication in HTTP protocol is insecure, and since Eve is listening on the channel between you (Alice) and the web server (Bob), you are required to create a secure channel. 
+This is exactly what SSL/TLS does. The process of establishing a secure SSL/TLS connection involves several steps. SSL/TLS security protocols use a combination of <em>asymmetric</em> and <em>symmetric</em> encryption:</p>
+<h5 id="step-1-client-hello-client-server">Step 1 - Client Hello (Client -&gt; Server).</h5>
+<p>First, the client sends a <em>Client Hello</em> to the server.</p>
+<h5 id="step-2-server-hello-server-client">Step 2 - Server Hello (Server -&gt; Client)</h5>
+<p>The server replies with a <em>Server Hello</em>. A Server Hello includes the following information:</p>
+<ul>
+<li><strong>Server Version</strong> - the TLS version the server uses</li>
+<li><strong>Session ID</strong> - it is used to resume the current communication session between the server and the client</li>
+<li><strong>Server digital certificate</strong> - the certificate contains some details about the server, as well as a public key with which the client can encrypt messages to the server. The certificate itself is signed by Certificate Authority (CA).</li>
+</ul>
+<h5 id="step-3-server-certificate-verification">Step 3 - Server Certificate Verification</h5>
+<p>As seen above, Eve is "sitting" on the channel between Alice and Bob. So what's stopping her from impersonating Bob, and once Alice sends <em>Client Hello</em>, she is replied by a fake <em>Server Hello</em> message with "certificate" issued by Eve itself. In such case, Alice would believe that the certificate belongs to Bob, encrypt messages to Bob using the certificate, without knowing that Eve could decrypt the messages.</p>
+<p>Here the CA comes into the picture. CA is an entity (e.g. Amazon Web Services, Microsoft etc...) trusted by both sides (client and server) that issues and signs digital certificates, so the ownership of a public key can be easily verified.</p>
+<p>In this step the client verifies the server's digital certificate.</p>
+<h5 id="step-4-client-server-master-key-exchange">Step 4 - Client-Server master-key exchange</h5>
+<p>Cert was verified successfully? great we can move on...</p>
+<p>Now, the client and the server should agree on a <em>symmetric key</em> (called <em>master key</em>) with which they will communicate during the session. 
+The client generates a 32-bytes random master-key, encrypts it using the server's certificate and sends the encrypted message in the channel. </p>
+<p>In addition to the encrypted master-key, the client sends a sample message to verify that the symmetric key encryption works.    </p>
+<h5 id="step-5-server-verification-message">Step 5 - Server verification message</h5>
+<p>The server decrypts the encrypted master-key. From now on, every message between both sides will be symmetrically encrypted by the master-key. 
+The server encrypts the sample message and sends it to the client. </p>
+<h5 id="step-6-client-verification-message">Step 6 - Client verification message</h5>
+<p>The Client verifies that the sample message was encrypted successfully.</p>
+<h4 id="lets-get-started">Let's get started...</h4>
+<p>You are given an HTTP web server with hostname <code>http://devops-jan22-1273001359.eu-north-1.elb.amazonaws.com:8080</code>. 
+Your goal is to perform the above steps using BASH commands, and establish a secure channel with the server. </p>
+<p>Please work in Ubuntu terminal, not from PyCharm. Below are some helpful instructions you may utilize in each step. Eventually, all your code should be written in <code>06_linux_ex2/tlsHandshake.sh</code>, committed and pushed to GitHub. </p>
+<p>Use <code>curl</code> to send the following <em>Client Hello</em> HTTP request to the server:</p>
+<pre><code>POST /clienthello
+{
+  &quot;clientVersion&quot;: &quot;3.2&quot;,
+  &quot;message&quot;: &quot;Client Hello&quot;
+}
+</code></pre>
+<p><em>POST</em> is the request type, <em>/clienthello</em> is the endpoint, and the json is the body.  </p>
+<p><em>Server Hello</em> response will be in the form:</p>
+<pre><code class="language-json">{
+  &quot;serverVersion&quot;: &quot;3.2&quot;,
+  &quot;sessionID&quot;: &quot;......&quot;,
+  &quot;serverCert&quot;: &quot;......&quot;
+}
+</code></pre>
+<p>The response is in json format. You may want to keep the sessionID in a variable called <code>SESSION_ID</code> for later usage,
+and save the server cert in a file called <code>cert.pem</code>.
+Use the command <code>jq -r '.&lt;key&gt;'</code> to parse and save specific keys from the JSON response (replace <code>&lt;key&gt;</code> by <em>serverVersion</em>, <em>sessionID</em> or <em>serverCert</em> according to your needs). You should use pipe (<code>|</code>) in order to pass the HTTP json response as an input to <code>jq</code>. Don't have <code>jq</code> on your Ubuntu? you know how to install it...</p>
+<p>Assuming the server certificate was stored in <code>cert.pem</code> file. You can verify the certificate by:</p>
+<pre><code class="language-shell">openssl verify -CAfile cert-ca-aws.pem cert.pem
+</code></pre>
+<p>while <code>cert-ca-aws.pem</code> is a file belonging to the Certificate Authority (in our case Amazon Web Services) who issued and signed the server cert. You can safely download it from <strong>https://devops-jan22.s3.eu-north-1.amazonaws.com/cert-ca-aws.pem</strong> (wget...)</p>
+<p>Upon a valid certificate validation, the following output will be printed to stdout:</p>
+<pre><code class="language-text">cert.pem: OK
+</code></pre>
+<p>In your tlsHandshake.sh file, use this snippet to exit the program if the certificate validation failed. Make sure you understand the code.</p>
+<pre><code class="language-shell">VERIFICATION_RESULT=$( openssl verify -CAfile cert-ca-aws.pem cert.pem )
+
+if [ &quot;$VERIFICATION_RESULT&quot; != &quot;cert.pem: OK&quot; ]; then
+  echo &quot;Server Certificate is invalid.&quot;
+  exit 1
+fi
+</code></pre>
+<p>Given a valid cert, <a href="https://www.google.com/search?q=generate+random+bytes+bash">generate a 32 random bytes string</a> and save it to <code>masterKey.txt</code> text file.</p>
+<p>Got tired? refresh yourself with some <a href="https://www.bleepingcomputer.com/news/security/russia-creates-its-own-tls-certificate-authority-to-bypass-sanctions/amp/">interesting reading</a> </p>
+<p>This line can help you encrypt the generated master-key secret with the server certificate:</p>
+<pre><code class="language-shell">openssl smime -encrypt -aes-256-cbc -in masterKey.txt -outform DER cert.pem | base64 -w 0
+</code></pre>
+<p>Now, <code>curl</code> again an HTTP POST request to the server endpoint <code>/keyexchange</code>, with the following body</p>
+<pre><code>POST /keyexchange
+{
+    &quot;sessionID&quot;: &quot;'$SESSION_ID'&quot;,
+    &quot;masterKey&quot;: &quot;'$MASTER_KEY'&quot;,
+    &quot;sampleMessage&quot;: &quot;Hi server, please encrypt me and send to client!&quot;
+}
+</code></pre>
+<p>Note that <code>$SESSION_ID</code> is a BASH variable containing the session ID you've got from the server's hello response, you need to create this variable once you have the sessions ID from the server. Also, <code>$MASTER_KEY</code> is your <strong>encrypted</strong> master key, again, you need to create this variable.</p>
+<p>The response for the above request would be in the form:</p>
+<pre><code class="language-json">{
+  &quot;sessionID&quot;: &quot;.....&quot;,
+  &quot;encryptedSampleMessage&quot;: &quot;.....&quot;
+}
+</code></pre>
+<p>All you have to do now is to decrypt the sample message and verify that it's equal to the original sample message. 
+This will indicate that the server uses successfully the master key.
+Please note that the <em>encryptedSampleMessage</em> is encoded in base64, before you decrypt it, encode it to binary, as following:</p>
+<pre><code class="language-shell"># the content of encryptedSampleMessage is stored in a file called encSampleMsg.txt
+
+cat encSampleMsg.txt | base64 -d &gt; encSampleMsgReady.txt
+
+# file encSampleMsgReady.txt is ready now to be used in &quot;openssl enc....&quot; command 
+</code></pre>
+<p>Recall the demo in <code>01_encryption</code> directory in our shared repo to see how to decrypt a message. Again, you should exit the program upon an invalid decryption. Do it by:</p>
+<pre><code class="language-shell">if [ &quot;$DECRYPTED_SAMPLE_MESSAGE&quot; != &quot;Hi server, please encrypt me and send to client!&quot; ]; then
+  echo &quot;Server symmetric encryption using the exchanged master-key has failed.&quot;
+  exit 1
+else
+  echo &quot;Client-Server TLS handshake has been completed successfully&quot;
+fi
+</code></pre>
+<p><strong>Well Done! you've manually implemented a secure communication over HTTP :-)</strong></p>
+<p>In real life we have TLS that does so for us, and it's quite similar to what you've done.</p>
+<h3 id="processes-handling">Processes handling</h3>
+<p><strong>20-25 points</strong></p>
+<p>Write your answers in the <code>06_linux_ex2/README</code> file.</p>
+<p><strong>(Q1)</strong> A user started a process and logged out from the terminal. Which command he used if the process still running in the background:</p>
+<ul>
+<li>nokill</li>
+<li>nohup</li>
+<li>nofg</li>
+<li>bg</li>
+</ul>
+<p><strong>(Q2)</strong> The <code>kill</code> command always terminates a process.</p>
+<ul>
+<li>True</li>
+<li>False</li>
+</ul>
+<p><strong>(Q3)</strong> Which command could be used to know how many processes are running in the background terminal session?</p>
+<ul>
+<li>process</li>
+<li>jobs</li>
+<li>work</li>
+<li>list</li>
+</ul>
+<p><strong>(Q4)</strong> Given a terminal session with long process running in it, how will you ask this process to terminate?</p>
+<ul>
+<li>CTRL+z</li>
+<li>CTRL+c</li>
+<li>CTRL+l</li>
+<li>CTRL+c twice</li>
+</ul>
+<p><strong>(Q5)</strong> Given a terminal session with long process running in it, how will you ask this process the stop?</p>
+<ul>
+<li>CTRL+z</li>
+<li>CTRL+c</li>
+<li>CTRL+l</li>
+<li>CTRL+c twice</li>
+</ul>
+<p><strong>(Q6)</strong> How would you run the <code>sleep 10</code> command as a foreground process?</p>
+<ul>
+<li>fg sleep 10</li>
+<li>sleep 10 &amp;</li>
+<li>foreground sleep 10</li>
+<li>sleep 10</li>
+</ul>
+<p>Given the following output</p>
+<p><img alt="ps-output" src="/mkdocs-DevOpsSep22/img/ps-output.png" /></p>
+<p><strong>(Q7)</strong> Which of the following command would deliver a SIGTERM to the <code>xscreensaver</code> process?</p>
+<ul>
+<li>kill TERM xscreensaver</li>
+<li>kill 4846</li>
+<li>kill xscreensaver</li>
+<li>kill -9 4846</li>
+<li>None of the above</li>
+</ul>
+<p><strong>(Q8)</strong> Which of the following would deliver a SIGKILL to the <code>xscreensaver</code> command?</p>
+<ul>
+<li>kill -9 4846</li>
+<li>kill xscreensaver</li>
+<li>kill -KILL xscreensaver</li>
+<li>kill -15 4846</li>
+<li>None of the above</li>
+</ul>
+<p><strong>(Q9)</strong> Which of the following would send a SIGCHLD (signal number 17) to the <code>ssh-agent</code> process?</p>
+<ul>
+<li>kill -CHLD ssh-agent</li>
+<li>kill -17 ssh-agent</li>
+<li>kill -CHLD 4828</li>
+<li>All of the above</li>
+<li>A and C only</li>
+</ul>
+<p><strong>(Q10)</strong> Which key pressed within the <code>top</code> command allows the user to send a signal to a process?</p>
+<ul>
+<li>s</li>
+<li>z</li>
+<li>t</li>
+<li>k</li>
+<li>None of the above</li>
+</ul>
+<p><strong>(Q11 - easy 5 points bonus)</strong> Open a new terminal session and type the command <code>python</code>. Then send a SIGINT signal using your keyboard. What best describes how the python process responds to the SIGINT signal? (you can exit this process by typing <code>exit()</code> in the python console)</p>
+<ul>
+<li>The program ignores the SIGINT signal.</li>
+<li>The program has implemented a custom signal handler for the SIGINT signal.</li>
+<li>The program implements the kernel default signal handler for the SIGINT signal, which is to terminate the process.</li>
+<li>The program implements the kernel default signal handler for the SIGINT signal, which is to stop (suspend) the process.</li>
+<li>None of the above</li>
+</ul>
+<h3 id="process-states">Process states</h3>
+<p><strong>20 points</strong> </p>
+<p>Generally speaking, in Linux system, two different processes cannot write to the same file concurrently (exactly at the same moment). Each process needs to obtain an exclusive write lock for the file. That implies that all the other processes who willing to write to this file will have to wait while one process is writing to it. The more I/O intensive processes you have, the longer the wait time. </p>
+<p>In this question we will create processes which are competing on the same resource (same file), and see how some of them are changing their state from Running to Waiting. </p>
+<p>Use <code>nano</code> to create the following script, store it as <code>~/write_to_file_sequentially.sh</code>, and make it
+executable.</p>
+<pre><code class="language-shell">#!/bin/bash
+for i in $(seq 1000); do
+  echo &quot;hello world&quot; &gt; overloaded_file
+done
+</code></pre>
+<p>This script writes the string "hello world" to a file called "overloaded_file". It does so 1000 times <strong>sequentially</strong>, and so will never be competing for access the file.
+Because we need multiple processes competing over the same resource, create the following script as well:</p>
+<pre><code class="language-shell">#!/bin/bash
+for i in $(seq 1000); do
+  ./write_to_file_sequentially.sh &amp;
+done
+</code></pre>
+<p>Name it <code>~/multi_process_file_writing.sh</code>. Make sure you understand what this script does. </p>
+<p>In another terminal, run <code>top</code>. In a one more separate terminal, be ready to run the command <code>ps aux</code>. 
+To summarize: </p>
+<ul>
+<li>Terminal 1 will be running <code>multi_process_file_writing.sh</code>.</li>
+<li>Terminal 2 will be running <code>top</code></li>
+<li>Terminal 3 will take a snapshot of <code>ps aux</code></li>
+</ul>
+<p>Now that everything is ready, run <code>./multi_process_file_writing.sh</code> and observe the terminal running the <code>top</code> command. While you see the <code>multi_process_file_writing</code> process in top, take the snapshot.</p>
+<p>From <code>ps</code> <a href="https://man7.org/linux/man-pages/man1/ps.1.html#PROCESS_STATE_CODES">man page</a>, read what each process state code means. 
+Explore <code>ps aux</code> output and copy to the <code>README</code> <strong>5 lines maximum</strong> which indicating that some processes are waiting (sleeping due to IO operation), and some are running.
+While you'll find many processes in a waiting state, it may be hard to catch a process in a running state... try to execute <code>ps aux</code> again until you'll fine one. 
+You may also find <code>ps aux | grep "   R    "</code> useful.</p>
+<h1 id="good-luck">Good Luck</h1>
+<p>Don't hesitate to ask any questions</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
