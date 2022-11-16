@@ -143,7 +143,7 @@ The server encrypts the sample message and sends it to the client. </p>
 <h5 id="step-6-client-verification-message">Step 6 - Client verification message</h5>
 <p>The Client verifies that the sample message was encrypted successfully.</p>
 <h4 id="lets-get-started">Let's get started...</h4>
-<p>You are given an HTTP web server with hostname <code>http://devops-jan22-1273001359.eu-north-1.elb.amazonaws.com:8080</code>. 
+<p>You are given an HTTP web server with hostname <code>http://ec2-54-207-102-47.sa-east-1.compute.amazonaws.com:8081</code>. 
 Your goal is to perform the above steps using BASH commands, and establish a secure channel with the server. </p>
 <p>Please work in Ubuntu terminal, not from PyCharm. Below are some helpful instructions you may utilize in each step. Eventually, all your code should be written in <code>06_linux_ex2/tlsHandshake.sh</code>, committed and pushed to GitHub. </p>
 <p>Use <code>curl</code> to send the following <em>Client Hello</em> HTTP request to the server:</p>
@@ -167,7 +167,7 @@ Use the command <code>jq -r '.&lt;key&gt;'</code> to parse and save specific key
 <p>Assuming the server certificate was stored in <code>cert.pem</code> file. You can verify the certificate by:</p>
 <pre><code class="language-shell">openssl verify -CAfile cert-ca-aws.pem cert.pem
 </code></pre>
-<p>while <code>cert-ca-aws.pem</code> is a file belonging to the Certificate Authority (in our case Amazon Web Services) who issued and signed the server cert. You can safely download it from <strong>https://devops-jan22.s3.eu-north-1.amazonaws.com/cert-ca-aws.pem</strong> (wget...)</p>
+<p>while <code>cert-ca-aws.pem</code> is a file belonging to the Certificate Authority (in our case Amazon Web Services) who issued and signed the server cert. You can safely download it from <strong>https://devops-course-sep-22.s3.sa-east-1.amazonaws.com/ex2/cert-ca-aws.pem</strong> (wget...)</p>
 <p>Upon a valid certificate validation, the following output will be printed to stdout:</p>
 <pre><code class="language-text">cert.pem: OK
 </code></pre>
