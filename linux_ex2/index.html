@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Linux ex-2 - DevOps Course January 22</title>
+    <title>Linux Ex2 - DevOps Course January 22</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Linux ex-2";
+        var mkdocs_page_name = "Linux Ex2";
         var mkdocs_page_input_path = "linux_ex2.md";
         var mkdocs_page_url = null;
       </script>
@@ -48,6 +48,40 @@
                 <li class="toctree-l1"><a class="reference internal" href="../linux_ex1/">Linux Ex1</a>
                 </li>
               </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Linux Ex2</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#preliminaries">Preliminaries</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#questions">Questions</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#tls-communication">TLS communication</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#step-1-client-hello-client-server">Step 1 - Client Hello (Client -&gt; Server).</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#step-2-server-hello-server-client">Step 2 - Server Hello (Server -&gt; Client)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#step-3-server-certificate-verification">Step 3 - Server Certificate Verification</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#step-4-client-server-master-key-exchange">Step 4 - Client-Server master-key exchange</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#step-5-server-verification-message">Step 5 - Server verification message</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#step-6-client-verification-message">Step 6 - Client verification message</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#lets-get-started">Let's get started...</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#processes-handling">Processes handling</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#process-states">Process states</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -62,7 +96,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Linux ex-2</li>
+      <li>Linux Ex2</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -72,12 +106,12 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="linux-ex-2">Linux ex-2</h1>
-<p>Due date: 31/03/2022 23:59</p>
+<p>Due date: 30/11/2022 23:59</p>
 <p>Max possible points: 135 points</p>
 <h2 id="preliminaries">Preliminaries</h2>
 <ol>
-<li>Open <a href="https://github.com/alonitac/DevOpsJan22">our shared git repo</a> in PyCharm and pull the repository in branch <strong>main</strong> to get an up-to-date version</li>
-<li>Create your own git branch for this exercise according to  <code>linux_ex2/&lt; alias &gt;</code> (e.g. linux_ex2/alonit).</li>
+<li>Open <a href="https://github.com/ronhadad22/DevOpsSep22.git">our shared git repo</a> in PyCharm and pull the repository in branch <strong>main</strong> to get an up-to-date version</li>
+<li>Create your own git branch for this exercise according to  <code>linux_ex2/&lt; alias &gt;</code> (e.g. linux_ex2/ronhad).</li>
 </ol>
 <h2 id="questions">Questions</h2>
 <h3 id="tls-communication">TLS communication</h3>
@@ -305,6 +339,9 @@ You may also find <code>ps aux | grep "   R    "</code> useful.</p>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../linux_ex1/" class="btn btn-neutral float-left" title="Linux Ex1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
 
   <hr/>
 
@@ -325,6 +362,8 @@ You may also find <code>ps aux | grep "   R    "</code> useful.</p>
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
     
+    
+      <span><a href="../linux_ex1/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>
