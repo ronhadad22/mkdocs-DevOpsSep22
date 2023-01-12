@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Python Ex1 - DevOps Course January 22</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Python Ex1";
+        var mkdocs_page_input_path = "python_ex1.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DevOps Course January 22
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linux_ex1/">Linux Ex1</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linux_ex2/">Linux Ex2</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Python Ex1</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DevOps Course January 22</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Python Ex1</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="poly-youtube-telegram-bot">Poly YouTube Telegram Bot</h1>
+<p>Due date: 20/02/2022 23:59  </p>
+<p><strong>Can be done in pairs!</strong></p>
+<h1 id="background">Background</h1>
+<p>Your goal in this exercise is to design and develop Telegram bot which will serve YouTube content. </p>
+<h2 id="part-1-create-the-environment">Part 1 - Create the environment</h2>
+<ol>
+<li>Fork <a href="https://github.com/ronhadad22/PolyBot.git">The PolyBot</a> repo (learn about <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">forking a repo</a> in GitHub)</li>
+<li>Clone your <strong>forked repo</strong> locally into PyCharm (Git -&gt; Clone...)</li>
+<li><a href="https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html">Create Python venv</a> for the project</li>
+<li>Install requirements by <code>pip install -r requirements.txt</code></li>
+</ol>
+<h2 id="part-2-create-a-telegram-bot">Part 2 - Create a Telegram Bot</h2>
+<ol>
+<li><a href="https://desktop.telegram.org/" target="_blank">Download</a> and install telegram desktop (you can use your phone app as well).</li>
+<li>Once installed, follow <a href="https://core.telegram.org/bots#6-botfather">this section</a> to create a bot. You should follow until “Generating an authentication token” (not including that section)</li>
+<li><a href="https://www.geeksforgeeks.org/create-a-telegram-bot-using-python/" target="_blank">Better instruction</a> </li>
+</ol>
+<p><img alt="telegramBot" src="/mkdocs-DevOpsSep22/img/telegramToken.png" /></p>
+<p>At this point, you should have your own bot, as well as the API token. <strong>Never</strong> commit sensitive data like secrets in Git repo. For now, save the token in a file called <code>.telegramToken</code> and add this file to <code>.gitignore</code> to exclude it completely from Git index. We will later learn that the place to store sensitive data is the cloud (AWS in our case).</p>
+<h2 id="part-3-running-a-simple-echo-bot">Part 3 - Running a simple “echo” Bot</h2>
+<h3 id="the-class-bot">The class <em>Bot</em></h3>
+<p>Under <code>bot.py</code> you are given a class called <code>Bot</code>. This class handles a simple telegram bot, as follows:  </p>
+<p>The constructor <code>__init__</code> gets <code>token</code> arg which is the bot token you have just received from Telegram. Inside the constructor, an Updater object is created, and the function <code>self._message_handler</code> is set as main msg handler, this function is getting called whenever a new message will be sent to the bot.</p>
+<p>The default behaviour of Bot class is to “echo” the incoming messages. 
+Run the program and send a message to the bot via Telegram app, observe the response and get an idea of how <code>_message_handler</code> is functioning (it's recommended to run in debug mode with breakpoints).</p>
+<h2 id="part-4-extending-the-echo-bot">Part 4 - Extending the echo bot</h2>
+<h3 id="the-class-quotebot">The class <em>QuoteBot</em></h3>
+<p>In <code>bot.py</code> you are given a class called <code>QuoteBot</code> which inherits from <code>Bot</code>. Upon incoming messages, this bot echoing the message while quoting the original message, unless the user is asking politely not to quote.
+Run this bot and check its behavior.</p>
+<h2 id="part-5-build-your-youtube-bot">Part 5 - Build your YouTube Bot</h2>
+<h3 id="the-class-youtubebot">The class <em>YoutubeBot</em></h3>
+<p>In <code>bot.py</code> you are given a class called <code>YoutubeBot</code> which inherits from <code>Bot</code>.
+Upon incoming messages, this class will take the message text, search and download corresponding Youtube video(s), the bot will then send the video file to the user.</p>
+<ol>
+<li>Inside <code>YoutubeBot</code> class, override <code>_message_handler</code> method and implement the functionality that is needed to download video from youtube and send it to the user (utilize <code>search_download_youtube_video</code> in <code>utils.py</code>).</li>
+<li>Remember that by inheriting the Bot class, you can use all of its methods (such as send_video or send_text).</li>
+<li>(Optional) Feel free to add more functionality e.g. implement a logic that caches videos that have already been downloaded, such that it will use the local copy when user requests the same video again. </li>
+</ol>
+<h2 id="part-6-containerize-your-app">Part 6 - Containerize your app</h2>
+<ol>
+<li>In your root directory of you repo, open <code>Dockerfile</code> and fill out the file such that the Bot app can be run as a Docker container</li>
+<li>Build and run the container locally, make sure it works well. </li>
+</ol>
+<h2 id="part-7-run-your-app-as-a-service-in-an-amazon-ec2-instance">Part 7 - Run your app "as a service" in an Amazon EC2 instance</h2>
+<ol>
+<li>In the course AWS account, create an Amazon Linux free tier EC2 instance.</li>
+<li>Connect to the VM using SSH</li>
+<li>Install <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-container-image.html#create-container-image-install-docker">docker engine</a> in it </li>
+<li>Get your code there by <code>git clone...</code> (install git on the VM if needed).</li>
+<li>Build you app with Docker (<code>docker build -t ...</code>)</li>
+<li>Run your container "as a service", which means (1) in the background, and (2) the container will start running automatically after reboot. (Hint: read about <a href="https://docs.docker.com/engine/reference/commandline/run/#options"><code>--detach</code></a> and <a href="https://docs.docker.com/engine/reference/commandline/run/#restart-policies---restart"><code>--restart</code></a> options)</li>
+<li><strong>You must validate that everything is running correctly!</strong> Communicate with your bot and check the response, reboot your machine and validate that the bot is up and running after.</li>
+</ol>
+<h2 id="submission-guidelines">Submission guidelines</h2>
+<ol>
+<li>Add the below public key to <code>~/.ssh/authorized_keys</code> file in your VM (in a separate line), so course staff will be able to connect and see your work.</li>
+<li>You don't need to keep the VM running. When your work is done, Stop the machine (don't Terminate it!)</li>
+<li>In your forked repo, in <code>SUBMISSION</code> file, write <em>your mails</em>, the <em>Instance id</em> and <em>region</em> of your EC2 instance. Don't forget to commit and push it so it is visible to course stuff: </li>
+</ol>
+<pre><code class="language-text">student1@gmail.com
+student2@gmail.com
+
+Instance: i-09bfad1e9a92275f9
+region: eu-north-1
+</code></pre>
+<p>No need to send your forked repo link since GitHub is automatically monitoring who forked the repo.</p>
+<h5 id="course-public-rsa-key">Course public RSA key</h5>
+<pre><code class="language-text">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8uOWjEcG0wFKSYbgEv/rDS6vyu1oZNfS7AWX35I0ozoNSJXEYiGW8Kw9VYE7TIEDCzBag61DbQyTDVlQpYVCw7uzDMTrgOAGQQIm8USOyFm2STRCeMa1sKivlDYynXhhtMS5k3e0a9Bo0hCbFRvVqjpixG/g/6wVA+vFjeWTo5bKjh9ekoSd3wdOu22PR6GjT0+NK5xlqhjKCnl19BFiIRptqcUkFuCgXqktrcwix0Cq2QhaQvYfIv/VA68OaClCX8wPDNXbO2VHK4170Kg5ubTrqx4ppP7Q0Gasz8CUCSGhf+njmhj3TnqhZ2UFsohyTIH4xV7e7wtNxDxdJ/r+T DevOpsCourseStuff
+</code></pre>
+<h1 id="good-luck">Good Luck</h1>
+<p>Don't hesitate to ask any questions</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../linux_ex2/" class="btn btn-neutral float-left" title="Linux Ex2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../linux_ex2/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
